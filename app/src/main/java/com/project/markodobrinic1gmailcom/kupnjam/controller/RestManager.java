@@ -9,6 +9,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by marko.dobrinic1@gmail.com on 23.4.2016..
  */
+
+/** Main Retrofit connection **/
+/** building the connection from the base url in Constants **/
 public class RestManager {
 
     private ProductService mProductService;

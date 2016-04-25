@@ -19,6 +19,7 @@ public class Product implements Serializable {
     private Bitmap picture;
     private boolean isFromDatabase;
 
+
     @Expose
     private int id;
 
@@ -33,10 +34,6 @@ public class Product implements Serializable {
 
     @Expose
     private String image;
-
-//    private Bitmap picture;
-//
-//    private boolean isFromDatabase;
 
 
     public String getImage() {
@@ -126,6 +123,5 @@ public class Product implements Serializable {
         picture = BitmapFactory.decodeByteArray(bitmapBytes, 0,
                 bitmapBytes.length);
     }
-
 
 }

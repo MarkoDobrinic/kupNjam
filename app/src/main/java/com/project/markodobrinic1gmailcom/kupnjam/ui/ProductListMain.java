@@ -9,14 +9,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.project.markodobrinic1gmailcom.kupnjam.R;
 import com.project.markodobrinic1gmailcom.kupnjam.controller.RestManager;
 import com.project.markodobrinic1gmailcom.kupnjam.model.callback.ProductFetchListener;
+import com.project.markodobrinic1gmailcom.kupnjam.model.helper.ProductFilter;
 import com.project.markodobrinic1gmailcom.kupnjam.model.pojo.Product;
 import com.project.markodobrinic1gmailcom.kupnjam.model.adapter.ProductAdapter;
 import com.project.markodobrinic1gmailcom.kupnjam.model.helper.Constants;
@@ -40,6 +46,8 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
     private ProductDatabase mDatabase;
     private Button mReload;
     private ProgressDialog mDialog;
+    private EditText mSearchField;
+    private ProductFilter mProductFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,7 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
         setContentView(R.layout.activity_product_main);
 
         configViews();
+        //mSearchField.addTextChangedListener(mQueryWatcher);
 
         mManager = new RestManager();
         mDatabase = new ProductDatabase(this);
@@ -86,6 +95,7 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
 
     private void configViews() {
 
+        mSearchField = (EditText) findViewById(R.id.searchField);
         mReload = (Button) findViewById(R.id.reload);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
@@ -198,8 +208,23 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
         }
     }
 
-
-
-
+//    /** ovo nam je textWatcher -> listener za upisivanje teksta */
+//    private TextWatcher mQueryWatcher = new TextWatcher() {
+//        @Override
+//        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//        }
+//
+//        @Override
+//        public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//        }
+//
+//        @Override
+//        public void afterTextChanged(Editable s) {
+//            /** kad se tekst promijeni, trebamo dobiti referencu adaptera */
+//            mProductFilter.(s.toString());
+//        }
+//    };
 
 }

@@ -28,4 +28,5 @@ public class Utilities {
     public static Bitmap getBitmapFromByte(byte[] image) {
         return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
+
 }

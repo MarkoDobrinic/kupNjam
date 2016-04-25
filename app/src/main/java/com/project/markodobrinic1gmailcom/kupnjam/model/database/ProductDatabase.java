@@ -23,8 +23,10 @@ import java.util.List;
  */
 public class ProductDatabase extends SQLiteOpenHelper {
 
+    /** tagging neccessary data for inspection **/
     private static final String TAG = ProductDatabase.class.getSimpleName();
 
+    /**  **/
     public ProductDatabase(Context context) {
         super(context, Constants.DATABASE.DB_NAME, null, Constants.DATABASE.DB_VERSION);
     }
