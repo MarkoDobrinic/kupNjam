@@ -16,7 +16,7 @@ public class RestManager {
 
     private ProductService mProductService;
 
-    public ProductService getFlowerService() {
+    public ProductService getProductService() {
         if (mProductService == null) {
 
             Retrofit retrofit = new Retrofit.Builder()
@@ -28,6 +28,5 @@ public class RestManager {
         }
         return mProductService;
     }
-
 
 }

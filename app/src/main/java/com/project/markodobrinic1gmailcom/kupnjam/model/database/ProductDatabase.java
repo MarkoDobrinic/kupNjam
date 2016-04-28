@@ -2,6 +2,7 @@ package com.project.markodobrinic1gmailcom.kupnjam.model.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,6 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.project.markodobrinic1gmailcom.kupnjam.model.callback.ProductFetchListener;
 import com.project.markodobrinic1gmailcom.kupnjam.model.helper.Constants;
@@ -23,8 +25,11 @@ import java.util.List;
  */
 public class ProductDatabase extends SQLiteOpenHelper {
 
-    /** tagging neccessary data for inspection **/
+    /**
+     * tagging neccessary data for inspection
+     **/
     private static final String TAG = ProductDatabase.class.getSimpleName();
+    private SQLiteDatabase mDb;
 
     /**  **/
     public ProductDatabase(Context context) {
@@ -46,9 +51,10 @@ public class ProductDatabase extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
+    /**  **/
     public void addProduct(Product product) {
 
-        Log.d(TAG, "Got Vaule -> " + product.getName());
+        Log.d(TAG, "Got Value -> " + product.getId() + " " + product.getName());
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -65,12 +71,14 @@ public class ProductDatabase extends SQLiteOpenHelper {
             Log.d(TAG, e.getMessage());
         }
         db.close();
+
     }
 
     public void fetchProducts(ProductFetchListener listener) {
         ProductFetcher fetcher = new ProductFetcher(listener, this.getWritableDatabase());
         fetcher.start();
     }
+
 
     public class ProductFetcher extends Thread {
 
@@ -93,18 +101,17 @@ public class ProductDatabase extends SQLiteOpenHelper {
                 if (cursor.moveToFirst()) {
                     do {
                         Product product = new Product();
+
                         product.setFromDatabase(true);
                         product.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Constants.DATABASE.ID))));
                         product.setName(cursor.getString(cursor.getColumnIndex(Constants.DATABASE.NAME)));
                         product.setDiscounted_price(Double.parseDouble(cursor.getString(cursor.getColumnIndex(Constants.DATABASE.DISC_PRICE))));
                         product.setPrice(Double.parseDouble(cursor.getString(cursor.getColumnIndex(Constants.DATABASE.PRICE))));
                         product.setPicture(Utilities.getBitmapFromByte(cursor.getBlob(cursor.getColumnIndex(Constants.DATABASE.IMAGE))));
-
                         product.setImage(cursor.getString(cursor.getColumnIndex(Constants.DATABASE.IMAGE_URL)));
 
                         productList.add(product);
                         publishProduct(product);
-
                     } while (cursor.moveToNext());
                 }
             }

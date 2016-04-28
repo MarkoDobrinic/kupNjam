@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface ProductFetchListener {
 
-    void onDeliverAllProducts(List<Product> productses);
+    void onDeliverAllProducts(List<Product> productList);
 
     void onDeliverProduct(Product product);
 

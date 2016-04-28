@@ -11,35 +11,63 @@
         android:layout_height="?attr/actionBarSize"
         android:background="#D61337">
 
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/searchField"
-            />
-        <!--<android.support.v7.widget.ButtonBarLayout-->
-            <!--android:layout_width="40dp"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:background="@drawable/search"-->
-            <!--android:layout_marginLeft="300dp"-->
-            <!--android:id="@+id/btnSearchProducts">-->
-        <!--</android.support.v7.widget.ButtonBarLayout>-->
-        </android.support.v7.widget.Toolbar>
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:text="Učitaj"
-        android:background="#D61337"
-        android:textColor="#FFF"
-        android:id="@+id/reload"/>
+            <EditText
+                android:id="@+id/searchField"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:singleLine="true" />
 
+            <RelativeLayout
+                android:id="@+id/badge"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:src="@mipmap/ic_trolley" />
+
+                <TextView
+                    android:id="@+id/counter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/counter_bg"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="#ffffff"
+                    android:textSize="10sp" />
+
+            </RelativeLayout>
+
+
+            <Button
+                android:id="@+id/reload"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="@android:drawable/ic_menu_rotate"
+                android:text=""
+                android:textColor="#FFF" />
+
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:padding="5dp"
+        android:id="@+id/recyclerViewMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="5dp"
         android:scrollbars="none" />
-
 
 </LinearLayout>

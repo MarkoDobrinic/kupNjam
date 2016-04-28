@@ -28,8 +28,8 @@ public class ProductDetail extends AppCompatActivity {
         configViews();
 
         mName.setText(product.getName());
-        mPrice.setText(String.format("$%.2f", product.getPrice()));
-        mDiscPrice.setText(String.format("$%.2f", product.getDiscounted_price()));
+        mPrice.setText(String.format("%.2f kn", product.getPrice()));
+        mDiscPrice.setText(String.format("%.2f kn", product.getDiscounted_price()));
 
         if (product.isFromDatabase()) {
             mImage.setImageBitmap(product.getPicture());

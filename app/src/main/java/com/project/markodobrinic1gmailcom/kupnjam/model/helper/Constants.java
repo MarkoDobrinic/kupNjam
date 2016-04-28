@@ -5,9 +5,29 @@ package com.project.markodobrinic1gmailcom.kupnjam.model.helper;
  */
 public class Constants {
 
+    /** URLs **/
     public static final class HTTP {
         public static final String IMAGE_URL = "https://kupnjam-abelso.rhcloud.com/images/";
         public static final String BASE_URL = "https://kupnjam-abelso.rhcloud.com";
+    }
+
+
+    public static final class USERS{
+
+        public static final String BASE_URL = "http://api.learn2crack.com/";
+        public static final String REGISTER_OPERATION = "register";
+        public static final String LOGIN_OPERATION = "login";
+        public static final String CHANGE_PASSWORD_OPERATION = "chgPass";
+
+        public static final String SUCCESS = "success";
+        public static final String FAILURE = "failure";
+        public static final String IS_LOGGED_IN = "isLoggedIn";
+
+        public static final String NAME = "name";
+        public static final String EMAIL = "email";
+        public static final String UNIQUE_ID = "unique_id";
+
+        public static final String TAG = "kupNjam_USERS";
     }
 
     public static final class REFERENCE {
@@ -18,6 +38,8 @@ public class Constants {
         public static final String PACKAGE_NAME = "com.project.markodobrinic1gmailcom.kupnjam.";
     }
 
+
+    /** SQLlite local DB constants **/
     public static final class DATABASE {
 
         public static final String DB_NAME = "products";
@@ -34,16 +56,18 @@ public class Constants {
         public static final String PRICE = "price";
         public static final String IMAGE_URL = "image_url";
         public static final String IMAGE = "image";
+        public static final String GET_ID = "SELECT " + ID +  " FROM " + TABLE_NAME ;
+        public static final String[] ALL_FIELDS = new String[] {ID, NAME};
 
 
+    //PRIMARY KEY
         public static final String CREATE_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME + "" +
-                "(" + ID + " INTEGER PRIMARY KEY not null," +
-                NAME + " TEXT not null," +
-                DISC_PRICE + " TEXT not null," +
-                PRICE + " TEXT not null," +
-                IMAGE_URL + " TEXT not null," +
+                "(" + ID + " INTEGER NOT NULL, " +
+                NAME + " TEXT not null, " +
+                DISC_PRICE + " TEXT not null, " +
+                PRICE + " TEXT not null, " +
+                IMAGE_URL + " TEXT not null, " +
                 IMAGE + " blob not null)";
-
     }
 
 
