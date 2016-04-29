@@ -41,8 +41,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     private ProgressBar progress;
     private SharedPreferences pref;
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

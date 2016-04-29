@@ -1,158 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:fillViewport="false"
+    android:background="#c8c8c8">
 
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/productDetailImage"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_gravity="center_horizontal" />
+        android:layout_height="wrap_content">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="3dp">
+            android:orientation="vertical"
+            android:id="@+id/info_holder">
 
-            <TextView
-                android:id="@+id/productDetailName"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/productDetailImage"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/product_info"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PLACEHOLDING"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:elevation="2dp"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/productDetailName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PRODUCT_NAME"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginRight="7dp"
+                        android:layout_gravity="left"
+                        android:textColor="#646464"
+                        android:layout_marginTop="7dp" />
+
+                    <TextView
+                        android:id="@+id/productDetailDate"
+                        android:layout_width="300dp"
+                        android:layout_height="30dp"
+                        android:text=" "
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#118402"
+                        android:layout_gravity="left"
+                        android:paddingTop="3dp"
+                        android:paddingLeft="7dp"
+                        android:layout_marginRight="7dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/date_bg"
+                        android:textSize="16dp"/>
+
+                    <TextView
+                        android:id="@+id/productDetailInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="This is some placeholder text which should contain the product info in the future."
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#222222"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="20dp"
+                        android:textSize="15dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="3dp"
+                        android:layout_gravity="left"
+                        android:gravity="left|bottom">
+
+                        <TextView
+                            android:id="@+id/productDetailDPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Medium Text"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textSize="30dp"
+                            android:layout_gravity="left" />
+
+                        <TextView
+                            android:id="@+id/productDetailPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Medium Text"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginBottom="2dp"
+                            android:textColor="#ff4800" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
         </LinearLayout>
 
-        <LinearLayout
+        <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="3dp">
+            android:layout_height="50dp"
+            android:layout_below="@id/info_holder"
+            android:id="@+id/btn_holder" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Datum: "
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <TextView
-                android:id="@+id/productDetailDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="#NA"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </LinearLayout>
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:gravity="center"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:padding="3dp">-->
-
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="Proizvođač: "-->
-                <!--android:textAppearance="?android:attr/textAppearanceLarge" />-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/productCompany"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="Medium Text"-->
-                <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
-        <!--</LinearLayout>-->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="3dp">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Opis: "
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <TextView
-                android:id="@+id/productDetailInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Medium Text"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="3dp">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cijena: "
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                />
-
-            <TextView
-                android:id="@+id/productDetailPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Medium Text"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="3dp">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Snižena Cijena: "
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <TextView
-                android:id="@+id/productDetailDPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Medium Text"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dodaj"
-                android:id="@+id/btnDetailCart"/>
-        </LinearLayout>
-
-    </LinearLayout>
-
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btnDetailCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@id/info_holder"
+            android:layout_marginBottom="-20dp"
+            android:layout_marginRight="20dp"
+            app:backgroundTint="#118402"
+            android:padding="225dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/add_to_list"/>
+    </RelativeLayout>
 </ScrollView>

@@ -45,10 +45,13 @@ public class Constants {
         public static final String DB_NAME = "products";
         public static final int DB_VERSION = 1;
         public static final String TABLE_NAME = "product";
+        public static final String TABLE_BASKET = "basket";
 
         public static final String DROP_QUERY = "DROP TABLE IF EXIST " + TABLE_NAME;
+        public static final String DROP_QUERY_BASKET = "DROP TABLE IF EXIST " + TABLE_BASKET;
 
         public static final String GET_PRODUCTS_QUERY = "SELECT * FROM " + TABLE_NAME;
+        public static final String GET_BASKET_QUERY = "SELECT * FROM " + TABLE_BASKET;
 
         public static final String ID = "id";
         public static final String NAME = "name";
@@ -56,19 +59,43 @@ public class Constants {
         public static final String PRICE = "price";
         public static final String IMAGE_URL = "image_url";
         public static final String IMAGE = "image";
+        public static final String STORE_ID = "product_id";
+        public static final String START_DATE = "start_date";
+        public static final String END_DATE = "end_date";
+        public static final String DESCRIPTION = "description";
+
         public static final String GET_ID = "SELECT " + ID +  " FROM " + TABLE_NAME ;
-        public static final String[] ALL_FIELDS = new String[] {ID, NAME};
+        //public static final String[] ALL_FIELDS = new String[] {ID, NAME};
 
 
     //PRIMARY KEY
         public static final String CREATE_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME + "" +
-                "(" + ID + " INTEGER NOT NULL, " +
+                "(" + ID + " INTEGER PRIMARY KEY NOT NULL, " +
                 NAME + " TEXT not null, " +
                 DISC_PRICE + " TEXT not null, " +
                 PRICE + " TEXT not null, " +
+                STORE_ID + " INTEGER not null, " +
+                START_DATE + " TEXT not null, " +
+                END_DATE + " TEXT not null, " +
+                DESCRIPTION + " TEXT not null, " +
+                IMAGE_URL + " TEXT not null, " +
+                IMAGE + " blob not null)";
+
+        public static final String CREATE_TABLE_BASKET = "CREATE TABLE " + TABLE_BASKET + "" +
+                "(" + ID + " INTEGER PRIMARY KEY NOT NULL, " +
+                NAME + " TEXT not null, " +
+                DISC_PRICE + " TEXT not null, " +
+                PRICE + " TEXT not null, " +
+                STORE_ID + " INTEGER not null, " +
+                START_DATE + " TEXT not null, " +
+                END_DATE + " TEXT not null, " +
+                DESCRIPTION + " TEXT not null, " +
                 IMAGE_URL + " TEXT not null, " +
                 IMAGE + " blob not null)";
     }
+
+
+
 
 
 

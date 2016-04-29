@@ -1,6 +1,7 @@
 package com.project.markodobrinic1gmailcom.kupnjam.ui;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -14,7 +15,7 @@ import com.squareup.picasso.Picasso;
 public class ProductDetail extends AppCompatActivity {
 
     private ImageView mImage;
-    private TextView mName, mId, mPrice, mDiscPrice;
+    private TextView mName, mId, mPrice, mDiscPrice, mDescription, mDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,11 @@ public class ProductDetail extends AppCompatActivity {
 
         mName.setText(product.getName());
         mPrice.setText(String.format("%.2f kn", product.getPrice()));
+        mPrice.setPaintFlags(mPrice.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
         mDiscPrice.setText(String.format("%.2f kn", product.getDiscounted_price()));
+        mDate.setText("Na akciji od: " + product.getStart_date() + " do " + product.getEnd_date());
+        mDescription.setText(product.getDescription());
+
 
         if (product.isFromDatabase()) {
             mImage.setImageBitmap(product.getPicture());
@@ -39,6 +44,9 @@ public class ProductDetail extends AppCompatActivity {
     }
 
     private void configViews() {
+
+        mDate = (TextView) findViewById(R.id.productDetailDate);
+        mDescription = (TextView) findViewById(R.id.productDetailInfo);
         mImage = (ImageView) findViewById(R.id.productDetailImage);
         mName = (TextView) findViewById(R.id.productDetailName);
         mDiscPrice = (TextView) findViewById(R.id.productDetailDPrice);

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/header_id"
+        android:title="Izbornik"
+        android:icon="@drawable/search">
+    </item>
+    <group >
+        <item
+            android:id="@+id/home_id"
+            android:title="Početno"
+            android:icon="@drawable/home1">
+        </item>
+        <item
+            android:title="Učitaj proizvode"
+            android:id="@+id/reloadProducts_id"
+            android:icon="@drawable/list2">
+        </item>
+
+        <item
+            android:id="@+id/mylist_id"
+            android:title="Moja Shopping Lista"
+            android:icon="@drawable/settings1">
+        </item>
+    </group>
+
+    <item android:title=" ">
+        <menu>
+            <item
+                android:title="Podijeli"
+                android:id="@+id/share_id"
+                android:icon="@drawable/list1">
+            </item>
+            <item
+                android:id="@+id/logout_id"
+                android:title="Odjavi se"
+                android:icon="@drawable/message1"
+                >
+            </item>
+
+            <item
+                android:title="O aplikaciji"
+                android:id="@+id/about_id"
+                android:icon="@drawable/like">
+            </item>
+        </menu>
+    </item>
+</menu>

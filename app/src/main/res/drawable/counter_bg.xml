@@ -10,6 +10,6 @@
         android:bottomRightRadius="30dp"
         />
     <size
-        android:height="25dp"
-        android:width="25dp"/>
+        android:height="20dp"
+        android:width="20dp"/>
 </shape>

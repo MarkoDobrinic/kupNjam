@@ -1,20 +1,33 @@
 package com.project.markodobrinic1gmailcom.kupnjam.ui;
 
 import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +38,6 @@ import com.project.markodobrinic1gmailcom.kupnjam.model.adapter.ProductAdapter;
 import com.project.markodobrinic1gmailcom.kupnjam.model.callback.ProductFetchListener;
 import com.project.markodobrinic1gmailcom.kupnjam.model.database.ProductDatabase;
 import com.project.markodobrinic1gmailcom.kupnjam.model.helper.Constants;
-import com.project.markodobrinic1gmailcom.kupnjam.model.helper.ProductFilter;
 import com.project.markodobrinic1gmailcom.kupnjam.model.helper.Utilities;
 import com.project.markodobrinic1gmailcom.kupnjam.model.pojo.Product;
 
@@ -35,26 +47,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProductListMain extends AppCompatActivity implements ProductAdapter.ProductClickListener, ProductFetchListener{
+public class ProductListMain extends AppCompatActivity implements ProductAdapter.ProductClickListener, ProductFetchListener, MenuItem.OnMenuItemClickListener, View.OnClickListener{
 
     private static final String TAG = ProductListMain.class.getSimpleName();
     private RecyclerView mRecyclerView;
     private RestManager mManager;
     private ProductAdapter mProductAdapter;
     private ProductDatabase mDatabase;
-    private Button mReload;
+    private Button mReload, mSearch;
+    private ImageButton mSettings;
     private ProgressDialog mDialog;
-
-    private ProductFilter mProductFilter;
-    private EditText mSarchField;
+    private Toolbar toolbar;
+    private DrawerLayout mMainDrawer;
+    private EditText mSearchField;
     private TextView mCounter;
     private int counter;
     private Map<String, Integer> mBasket = new HashMap<>();
-
+    boolean doubleBackToExitPressed = false;
+    private ImageView mShoppingList;
+    private NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +79,11 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
         mManager = new RestManager();
         mDatabase = new ProductDatabase(this);
 
+        /** Configuring Views **/
         configViews();
-        mSarchField.addTextChangedListener(new TextWatcher() {
+
+        /** onTextChanged Listener **/
+        mSearchField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
@@ -72,23 +91,30 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
 
             @Override
             public void afterTextChanged(Editable s) {
-                mProductAdapter.filter(s.toString());
+                mProductAdapter.filter(s.toString().toLowerCase());
             }
         });
 
+        /** loading product Feed **/
         loadProductFeed();
-        mReload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadProductFeed();
-            }
-        });
+
+        mReload.setOnClickListener(this);
+
+        mSearch.setOnClickListener(this);
+
+        mSettings.setOnClickListener(this);
+
+        mShoppingList.setOnClickListener(this);
+
+
+
     }
+
 
     private void loadProductFeed() {
 
         mDialog = new ProgressDialog(ProductListMain.this);
-        mDialog.setMessage("Učitavanje podataka o proizvodima...");
+        mDialog.setMessage("Učitavanje proizvoda...");
         mDialog.setCancelable(true);
         mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mDialog.setIndeterminate(true);
@@ -110,17 +136,27 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
 
     private void configViews() {
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        /** ako bude moguće, ovo maknuti **/
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
+        mSettings = (ImageButton) findViewById(R.id.sandwich_menu);
+        mMainDrawer = (DrawerLayout) findViewById(R.id.mainDrawer);
         mCounter = (TextView) findViewById(R.id.counter);
+        mSearch = (Button) findViewById(R.id.search_product);
         mReload = (Button) findViewById(R.id.reload);
-        mSarchField = (EditText) findViewById(R.id.searchField);
-       //// mSearch = (Button) findViewById(R.id.btn_search);
+        mSearchField = (EditText) findViewById(R.id.searchField);
+        mShoppingList = (ImageView) findViewById(R.id.shoppingList);
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewMain);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setRecycledViewPool(new RecyclerView.RecycledViewPool());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
 
         mProductAdapter = new ProductAdapter(this);
-
         mRecyclerView.setAdapter(mProductAdapter);
     }
 
@@ -214,6 +250,12 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     public boolean getNetworkAvailability() {
         return Utilities.isNetworkAvailable(getApplicationContext());
@@ -231,6 +273,64 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
     @Override
     public void onHideDialog() {
         mDialog.dismiss();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) //get the id which is an int
+        {
+            case R.id.about_id:  // check if its the menu item next selected
+                // Single menu item is selected do something
+                // Ex: launching new activity/screen or show alert message
+                Toast.makeText(this, "About Selected", Toast.LENGTH_SHORT).show();
+                //startActivity(new Intent(MainActivity.this,secondAct.class));
+                break;
+            default:
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) //get the id which is an int
+        {
+            case R.id.about_id:  // check if its the menu item next selected
+                // Single menu item is selected do something
+                // Ex: launching new activity/screen or show alert message
+                Toast.makeText(this, "About Selected", Toast.LENGTH_SHORT).show();
+                //startActivity(new Intent(MainActivity.this,secondAct.class));
+                break;
+            default:
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()) {
+            case R.id.reload:
+                loadProductFeed();
+                break;
+            case R.id.search_product:
+                if(mSearchField.getVisibility() == View.VISIBLE){
+                    mSearchField.setVisibility(View.GONE);
+                }else {
+                    mSearchField.setVisibility(View.VISIBLE);
+                    mSearchField.requestFocus();
+                }
+                break;
+            case R.id.sandwich_menu:
+                mMainDrawer.openDrawer(Gravity.LEFT);
+                break;
+            case R.id.shoppingList:
+                Intent intent = new Intent(this, ProductListUser.class);
+                startActivity(intent);
+            default:
+        }
     }
 
 
@@ -263,23 +363,24 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
         }
     }
 
-//    /** ovo nam je textWatcher -> listener za upisivanje teksta */
-//    private TextWatcher mQueryWatcher = new TextWatcher() {
-//        @Override
-//        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//        }
-//
-//        @Override
-//        public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//        }
-//
-//        @Override
-//        public void afterTextChanged(Editable s) {
-//            /** kad se tekst promijeni, trebamo dobiti referencu adaptera */
-//            mProductFilter.(s.toString());
-//        }
-//    };
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressed) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+        this.doubleBackToExitPressed = true;
+        Toast.makeText(this, "Kliknite nazad još jednom za izlaz.", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressed=false;
+            }
+        }, 2000);
+    }
 
 }

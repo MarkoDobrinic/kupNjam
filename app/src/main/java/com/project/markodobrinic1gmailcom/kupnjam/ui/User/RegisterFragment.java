@@ -35,6 +35,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     private TextView tv_login;
     private ProgressBar progress;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -44,6 +45,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     }
 
     private void initViews(View view){
+
 
         btn_register = (AppCompatButton)view.findViewById(R.id.btn_register);
         tv_login = (TextView)view.findViewById(R.id.tv_login);

@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.project.markodobrinic1gmailcom.kupnjam.R;
 import com.project.markodobrinic1gmailcom.kupnjam.model.helper.Constants;
 import com.project.markodobrinic1gmailcom.kupnjam.ui.User.LoginFragment;
 import com.project.markodobrinic1gmailcom.kupnjam.ui.User.ProfileFragment;
+import com.project.markodobrinic1gmailcom.kupnjam.ui.User.StartingFragment;
 
 public class UserMain extends AppCompatActivity{
 
@@ -26,12 +28,27 @@ public class UserMain extends AppCompatActivity{
     }
 
     private void initFragment(){
+
         Fragment fragment;
-        if(pref.getBoolean(Constants.USERS.IS_LOGGED_IN, false)){
-            fragment = new ProfileFragment();
-        }else {
-            fragment = new LoginFragment();
-        }
+//        if(pref.getBoolean(Constants.USERS.IS_LOGGED_IN, false)){
+//  //        fragment = new ProfileFragment();
+////            Intent intent = new Intent(this, ProductListMain.class);
+////            startActivity(intent);
+//            Intent intent = new Intent(this, ProductListMain.class);
+//            startActivity(intent);
+//            Toast.makeText(this, "prvo" , Toast.LENGTH_LONG).show();
+//        }else {
+////            fragment = new LoginFragment();
+////            FragmentTransaction ft = getFragmentManager().beginTransaction();
+////            ft.replace(R.id.fragment_frame,fragment);
+////            ft.commit();
+//            fragment = new StartingFragment();
+//            FragmentTransaction ft = getFragmentManager().beginTransaction();
+//            ft.replace(R.id.fragment_frame,fragment);
+//            ft.commit();
+//            Toast.makeText(this, "drugo" , Toast.LENGTH_LONG).show();
+//        }
+        fragment = new StartingFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_frame,fragment);
         ft.commit();

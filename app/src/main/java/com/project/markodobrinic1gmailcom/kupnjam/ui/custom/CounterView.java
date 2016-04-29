@@ -42,8 +42,8 @@ public class CounterView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         add = (Button) findViewById(R.id.addToCart);
-        remove = (Button) findViewById(R.id.removeFromCart);
-        val = (EditText) findViewById(R.id.countValue);
+        //remove = (Button) findViewById(R.id.removeFromCart);
+       // val = (EditText) findViewById(R.id.countValue);
         this.counter = Integer.parseInt(val.getText().toString());
         add.setOnClickListener(new OnClickListener() {
             @Override

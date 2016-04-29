@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.project.markodobrinic1gmailcom.kupnjam.R;
 import com.project.markodobrinic1gmailcom.kupnjam.model.helper.Constants;
+import com.project.markodobrinic1gmailcom.kupnjam.model.helper.Utilities;
 import com.project.markodobrinic1gmailcom.kupnjam.model.pojo.Product;
 import com.project.markodobrinic1gmailcom.kupnjam.ui.custom.CounterView;
 import com.squareup.picasso.Picasso;
@@ -54,7 +55,22 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         holder.mName.setText(currProduct.getName());
         holder.mPrice.setText(String.format("%.2f kn", currProduct.getPrice()));
         holder.mDiscPrice.setText(String.format("%.2f kn", currProduct.getDiscounted_price()));
-        holder.handleCounter(position);
+        holder.mProductDate.setText("Akcija traje od: " + currProduct.getStart_date() + " do " + currProduct.getEnd_date());
+
+       // holder.handleCounter(position);
+
+        switch (currProduct.getStore_id()) {
+            case 1:
+                holder.mStorePhoto.setImageResource(R.drawable.konzum);
+                    break;
+            case 2:
+                holder.mStorePhoto.setImageResource(R.drawable.billa);
+                break;
+            case 3:
+                holder.mStorePhoto.setImageResource(R.drawable.spar);
+                break;
+            default:
+        }
 
         if (currProduct.isFromDatabase()) {
             holder.mPhoto.setImageBitmap(currProduct.getPicture());
@@ -101,33 +117,35 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private ImageView mPhoto;
-        private TextView mName, mPrice, mDiscPrice;
+        private ImageView mPhoto, mStorePhoto;
+        private TextView mName, mPrice, mDiscPrice, mProductDate;
         private CounterView mCounter;
 
         public Holder(View itemView) {
             super(itemView);
+            mProductDate = (TextView) itemView.findViewById(R.id.productDate);
             mPhoto = (ImageView) itemView.findViewById(R.id.productImage);
+            mStorePhoto = (ImageView) itemView.findViewById(R.id.productStoreImage);
             mName = (TextView) itemView.findViewById(R.id.productName);
             mPrice = (TextView) itemView.findViewById(R.id.productPrice);
             mDiscPrice = (TextView) itemView.findViewById(R.id.productDiscPrice);
-            mCounter = (CounterView) itemView.findViewById(R.id.counterView);
-            mCounter.setOnCounterChanged(new CounterView.OnCounterChanged() {
-                @Override
-                public void onChange(int count) {
-                    int x = count;
-                    //Product product = mFilterableProducts.get(getLayoutPosition());
-//                    Product product = new Product();
+//            mCounter = (CounterView) itemView.findViewById(R.id.counterView);
+//            mCounter.setOnCounterChanged(new CounterView.OnCounterChanged() {
+//                @Override
+//                public void onChange(int count) {
+//                    //int x = count;
+//                    Product product = mFilterableProducts.get(getLayoutPosition());
+//                    //Product product = new Product();
 //                    product.setName("Test");
 //                    mListener.onUpdateBasket(count, product);
-                }
-            });
+//                }
+//            });
             itemView.setOnClickListener(this);
         }
 
         public void handleCounter(int position) {
             Product product = mFilterableProducts.get(position);
-            mCounter.setCounterValue(mListener.getCounter(product.getName()));
+           // mCounter.setCounterValue(mListener.getCounter(product.getName()));
         }
 
         public void handleClick(){
@@ -156,65 +174,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
         int getCounter(String name);
     }
-
-    /**  FILTIRARNJE VIEWA */
-
-    /**za filter listu */
-//    private LayoutInflater mInflater;
-//    private ProductService mProductService;
-
-
-    /** konstruktor za filter listu*/
-//    public ProductAdapter(ProductClickListener listener, LayoutInflater inflater) {
-//
-//        this.mListener = listener;
-//        mInflater = inflater;
-//        mDefaultProducts = (JSONArray) mProductService.getAllProducts();
-//        mFilteredProducts = mDefaultProducts;
-//    }
-
-//    public void filter(String query) {
-//        /** trebamo prvo stvoriti instancu objketa Cheeses */
-//        mFilteredProducts = new ArrayList<>();
-//        /** iteriramo kroz listu sireva i uspoređujemo je li objekt sadrži traženi query */
-//        for (String product : mProducts.get(getSelectedProduct().getName())) {
-//            if(product.toLowerCase().contains(query.toLowerCase())){ /** da budemo sigurni da prepozna string */
-//                mFilteredProducts.add(product);
-//            }
-//        }
-//        notifyDataSetChanged(); /**obavijestimo layout */
-//    }
-
-//    @Override
-//    public Filter getFilter() {
-//        return new Filter() {
-//            @Override
-//            protected FilterResults performFiltering(CharSequence constraint) {
-//                final FilterResults oReturn = new FilterResults();
-//                final List<Product> resultProducts = new ArrayList<Product>();
-//                if(mProducts == null){
-//                    mProducts = mFiltered;
-//                    if(constraint != null){
-//                        if(mProducts !=null && mProducts.size()>0){
-//                            for(final Product product : mProducts){
-//                                if (product.getName().toLowerCase().contains(constraint.toString())) {
-//                                    resultProducts.add(product);
-//                                }
-//                            }
-//                        }
-//                    }
-//                    oReturn.values = resultProducts;
-//                }
-//                return oReturn;
-//            }
-//
-//            @Override
-//            protected void publishResults(CharSequence constraint, FilterResults results) {
-//                mProducts = (ArrayList<Product>)results.values;
-//                notifyDataSetChanged();
-//            }
-//        };
-//    }
 
 
 }

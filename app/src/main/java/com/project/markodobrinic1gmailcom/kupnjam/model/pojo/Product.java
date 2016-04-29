@@ -35,6 +35,17 @@ public class Product implements Serializable {
     @Expose
     private String image;
 
+    @Expose
+    private int store_id;
+
+    @Expose
+    private String start_date;
+
+    @Expose
+    private String end_date;
+
+    @Expose
+    private String description;
 
     public String getImage() {
         return image;
@@ -100,6 +111,10 @@ public class Product implements Serializable {
         out.writeObject(discounted_price);
         out.writeObject(price);
         out.writeObject(image);
+        out.writeObject(store_id);
+        out.writeObject(start_date);
+        out.writeObject(end_date);
+        out.writeObject(description);
 
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         picture.compress(Bitmap.CompressFormat.PNG, 0, byteStream);
@@ -114,6 +129,10 @@ public class Product implements Serializable {
         discounted_price = (Double) in.readObject();
         price = (Double) in.readObject();
         image = (String) in.readObject();
+        store_id = (Integer) in.readObject();
+        start_date = (String) in.readObject();
+        end_date = (String) in.readObject();
+        description = (String) in.readObject();
 
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         int b;
@@ -124,4 +143,35 @@ public class Product implements Serializable {
                 bitmapBytes.length);
     }
 
+    public int getStore_id() {
+        return store_id;
+    }
+
+    public void setStore_id(int store_id) {
+        this.store_id = store_id;
+    }
+
+    public String getStart_date() {
+        return start_date;
+    }
+
+    public void setStart_date(String start_date) {
+        this.start_date = start_date;
+    }
+
+    public String getEnd_date() {
+        return end_date;
+    }
+
+    public void setEnd_date(String end_date) {
+        this.end_date = end_date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

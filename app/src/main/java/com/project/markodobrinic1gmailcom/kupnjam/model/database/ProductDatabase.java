@@ -56,22 +56,29 @@ public class ProductDatabase extends SQLiteOpenHelper {
 
         Log.d(TAG, "Got Value -> " + product.getId() + " " + product.getName());
 
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(Constants.DATABASE.ID, product.getId());
-        values.put(Constants.DATABASE.NAME, product.getName());
-        values.put(Constants.DATABASE.DISC_PRICE, Double.toString(product.getDiscounted_price()));
-        values.put(Constants.DATABASE.PRICE, Double.toString(product.getPrice()));
-        values.put(Constants.DATABASE.IMAGE_URL, product.getImage());
-        values.put(Constants.DATABASE.IMAGE, Utilities.getPictureByteOfArray(product.getPicture()));
+        if(!checkId(Integer.toString(product.getId()))) {
 
-        try {
-            db.insert(Constants.DATABASE.TABLE_NAME, null, values);
-        } catch (Exception e) {
-            Log.d(TAG, e.getMessage());
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(Constants.DATABASE.ID, product.getId());
+            values.put(Constants.DATABASE.NAME, product.getName());
+            values.put(Constants.DATABASE.DISC_PRICE, Double.toString(product.getDiscounted_price()));
+            values.put(Constants.DATABASE.PRICE, Double.toString(product.getPrice()));
+            values.put(Constants.DATABASE.STORE_ID, product.getStore_id());
+            values.put(Constants.DATABASE.START_DATE, product.getStart_date());
+            values.put(Constants.DATABASE.END_DATE, product.getEnd_date());
+            values.put(Constants.DATABASE.DESCRIPTION, product.getDescription());
+            values.put(Constants.DATABASE.IMAGE_URL, product.getImage());
+            values.put(Constants.DATABASE.IMAGE, Utilities.getPictureByteOfArray(product.getPicture()));
+
+
+            try {
+                db.insert(Constants.DATABASE.TABLE_NAME, null, values);
+            } catch (Exception e) {
+                Log.d(TAG, e.getMessage());
+            }
+            db.close();
         }
-        db.close();
-
     }
 
     public void fetchProducts(ProductFetchListener listener) {
@@ -101,12 +108,15 @@ public class ProductDatabase extends SQLiteOpenHelper {
                 if (cursor.moveToFirst()) {
                     do {
                         Product product = new Product();
-
                         product.setFromDatabase(true);
                         product.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Constants.DATABASE.ID))));
                         product.setName(cursor.getString(cursor.getColumnIndex(Constants.DATABASE.NAME)));
                         product.setDiscounted_price(Double.parseDouble(cursor.getString(cursor.getColumnIndex(Constants.DATABASE.DISC_PRICE))));
                         product.setPrice(Double.parseDouble(cursor.getString(cursor.getColumnIndex(Constants.DATABASE.PRICE))));
+                        product.setStore_id(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Constants.DATABASE.STORE_ID))));
+                        product.setStart_date(cursor.getString(cursor.getColumnIndex(Constants.DATABASE.START_DATE)));
+                        product.setEnd_date(cursor.getString(cursor.getColumnIndex(Constants.DATABASE.END_DATE)));
+                        product.setDescription(cursor.getString(cursor.getColumnIndex(Constants.DATABASE.DESCRIPTION)));
                         product.setPicture(Utilities.getBitmapFromByte(cursor.getBlob(cursor.getColumnIndex(Constants.DATABASE.IMAGE))));
                         product.setImage(cursor.getString(cursor.getColumnIndex(Constants.DATABASE.IMAGE_URL)));
 
@@ -135,5 +145,25 @@ public class ProductDatabase extends SQLiteOpenHelper {
             });
         }
     }
+
+    public boolean checkId(String id)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(Constants.DATABASE.TABLE_NAME,
+                new String[] { Constants.DATABASE.ID },
+                Constants.DATABASE.ID + " = ? ",
+                new String[] {id},
+                null, null, null, null);
+
+        if(cursor.moveToFirst())
+
+            return true; //row exists
+        else
+            return false;
+
+    }
+
+
 
 }
