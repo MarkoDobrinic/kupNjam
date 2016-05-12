@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.project.markodobrinic1gmailcom.kupnjam.R;
 import com.project.markodobrinic1gmailcom.kupnjam.model.helper.Constants;
 import com.project.markodobrinic1gmailcom.kupnjam.model.pojo.Product;
@@ -27,6 +28,11 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
+
+//        /** facebook logging stuff **/
+//        FacebookSdk.sdkInitialize(getApplicationContext());
+//        AppEventsLogger.activateApp(this);
+
 
         Intent intent = getIntent();
 
@@ -81,7 +87,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnDetailCart:
-                Toast.makeText(ProductDetail.this, "TBA", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProductDetail.this, "Ova funkcionalnost trenutno nije dostupna!", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 Toast.makeText(ProductDetail.this, "TBA", Toast.LENGTH_SHORT).show();

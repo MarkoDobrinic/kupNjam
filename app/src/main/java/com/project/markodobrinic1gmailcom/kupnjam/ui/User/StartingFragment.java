@@ -45,21 +45,6 @@ public class StartingFragment extends Fragment implements View.OnClickListener {
 
         View view = inflater.inflate(R.layout.fragment_start,container,false);
         initViews(view);
-        mBtnEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToMainLogin();
-            }
-        });
-        mGoToProducts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getActivity(), ProductListMain.class);
-                startActivity(intent);
-            }
-        });
-
         return view;
     }
 
@@ -78,33 +63,30 @@ public class StartingFragment extends Fragment implements View.OnClickListener {
         mBtnFacebook = (AppCompatButton) view.findViewById(R.id.btn_facebook);
         mBtnGoogle = (AppCompatButton)view.findViewById(R.id.btn_google);
         mGoToProducts = (TextView)view.findViewById(R.id.tv_products);
+
+        mBtnEmail.setOnClickListener(this);
+        mBtnFacebook.setOnClickListener(this);
+        mBtnGoogle.setOnClickListener(this);
+        mGoToProducts.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-
-//        switch (v.getId()){
-//
-//            case R.id.btnStartEmail:
-//                goToMainLogin();
-//                break;
-//
-//            case R.id.btn_facebook:
-//                Snackbar.make(getView(), "Facebook", Snackbar.LENGTH_LONG).show();
-//                break;
-//
-//            case R.id.btn_google:
-//                Snackbar.make(getView(), "Google +", Snackbar.LENGTH_LONG).show();
-//                break;
-//
-//            case R.id.tv_products:
-//                Intent intent = new Intent(getActivity(), ProductListMain.class);
-//                startActivity(intent);
-//                break;
-//
-//            default:
-//
-//        }
+        switch (v.getId()){
+            case R.id.btnStartEmail:
+                goToMainLogin();
+                break;
+            case R.id.tv_products:
+                Intent intent = new Intent(getActivity(), ProductListMain.class);
+                startActivity(intent);
+                break;
+            case R.id.btn_facebook:
+                Toast.makeText(getActivity(), "Facebook prijava trenutno nije dostupna!", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_google:
+                Toast.makeText(getActivity(), "Google+ prijava trenutno nije dostupna!", Toast.LENGTH_SHORT).show();
+                break;
+        }
 
     }
 

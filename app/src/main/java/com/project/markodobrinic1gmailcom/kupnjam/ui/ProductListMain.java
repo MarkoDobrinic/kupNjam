@@ -2,6 +2,7 @@ package com.project.markodobrinic1gmailcom.kupnjam.ui;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -151,11 +153,14 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.user_id:
+                        Toast.makeText(ProductListMain.this, "Ova funkcionalnost trenutno nije dostupna!", Toast.LENGTH_SHORT).show();
+                        return true;
                     case R.id.logout_id:
                         doLogout();
                         return true;
                     case R.id.home_id:
-                        Toast.makeText(ProductListMain.this, "TBA", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProductListMain.this, "Ova funkcionalnost trenutno nije dostupna!", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.reloadProducts_id:
                         mMainDrawer.closeDrawer(Gravity.LEFT);
@@ -167,7 +172,17 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
                         loadMyShoppingList();
                         return true;
                     case R.id.about_id:
-                        Toast.makeText(ProductListMain.this, "kupNjam 2016. Copyright - Marko Dobrinić & Aron Belsö", Toast.LENGTH_LONG).show();
+                        AlertDialog dialog = new AlertDialog.Builder(ProductListMain.this)
+                                .setTitle("")
+                                .setView(R.layout.about_layout)
+                                .setCancelable(true)
+                                .setPositiveButton("Zatvori", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                }).create();
+                        dialog.show();
                         return true;
                 }
                 return false;

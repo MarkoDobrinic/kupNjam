@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.project.markodobrinic1gmailcom.kupnjam.ui.ProductListUser">
+    tools:context="com.project.markodobrinic1gmailcom.kupnjam.ui.ProductListUser"
+    android:background="#c8c8c8"
+    >
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
@@ -35,8 +37,8 @@
         android:layout_width="match_parent"
         android:background="#cccccc"
         android:layout_height="match_parent"
-        android:padding="5dp"
-        android:layout_margin="5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:scrollbars="none" />
 
 </LinearLayout>

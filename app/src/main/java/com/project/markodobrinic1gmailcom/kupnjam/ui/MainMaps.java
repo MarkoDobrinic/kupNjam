@@ -71,7 +71,7 @@ public class MainMaps extends FragmentActivity implements OnMapReadyCallback {
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                Toast.makeText(MainMaps.this, marker.getTitle() + marker.getSnippet(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainMaps.this, marker.getTitle() +  " \n" + marker.getSnippet(), Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
@@ -115,4 +115,6 @@ public class MainMaps extends FragmentActivity implements OnMapReadyCallback {
                 .build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
     }
+
+
 }

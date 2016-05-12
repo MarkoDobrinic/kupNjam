@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "954025433839",
+    "project_id": "default-demo-app-7b307"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:954025433839:android:ebed5fc913af757c",
+        "android_client_info": {
+          "package_name": "com.project.markodobrinic1gmailcom.kupnjam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "954025433839-elec7cs4qrr42g8qesgqbpt17m2ahlhv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.markodobrinic1gmailcom.kupnjam",
+            "certificate_hash": "7C9C9FDB6CCCC765D8CAD16A5AC57702BA18B2F7"
+          }
+        },
+        {
+          "client_id": "954025433839-r3v55cdflu5t473o6pt8h31v8u42b3lc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCi1yvFhEXZbgfWYw7HPq3stypLCdmu6Ns"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

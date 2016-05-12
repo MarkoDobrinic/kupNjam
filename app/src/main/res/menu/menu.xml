@@ -4,18 +4,14 @@
     <group android:id="@+id/user">
         <item
             android:title="Ivan Horvat"
-            android:icon="@drawable/profile">
+            android:icon="@drawable/profile"
+            android:id="@+id/user_id">
         </item>
     </group>
     <group>
         <item
             android:title="Učitaj proizvode"
             android:id="@+id/reloadProducts_id"
-            android:icon="@drawable/refresh">
-        </item>
-        <item
-            android:title="Očisti listu"
-            android:id="@+id/clearProducts_id"
             android:icon="@drawable/refresh">
         </item>
     </group>
