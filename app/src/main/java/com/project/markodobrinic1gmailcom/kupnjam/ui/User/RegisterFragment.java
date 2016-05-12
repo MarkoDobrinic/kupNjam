@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,27 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         tv_login.setOnClickListener(this);
     }
 
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+
+                    goToLogin();
+                    return true;
+                }
+                return false;
+            }
+        });
+        super.onResume();
+    }
 
     @Override
     public void onClick(View v) {

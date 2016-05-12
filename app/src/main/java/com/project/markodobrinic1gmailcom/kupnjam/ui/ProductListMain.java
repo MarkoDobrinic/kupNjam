@@ -1,12 +1,10 @@
 package com.project.markodobrinic1gmailcom.kupnjam.ui;
 
 import android.app.ProgressDialog;
-import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,10 +18,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -33,28 +30,29 @@ import android.widget.Toast;
 
 import com.project.markodobrinic1gmailcom.kupnjam.R;
 import com.project.markodobrinic1gmailcom.kupnjam.controller.RestManager;
-import com.project.markodobrinic1gmailcom.kupnjam.controller.usercontroller.Delegate;
 import com.project.markodobrinic1gmailcom.kupnjam.model.adapter.ProductAdapter;
 import com.project.markodobrinic1gmailcom.kupnjam.model.callback.ProductFetchListener;
 import com.project.markodobrinic1gmailcom.kupnjam.model.database.ProductDatabase;
 import com.project.markodobrinic1gmailcom.kupnjam.model.helper.Constants;
 import com.project.markodobrinic1gmailcom.kupnjam.model.helper.Utilities;
 import com.project.markodobrinic1gmailcom.kupnjam.model.pojo.Product;
+import com.project.markodobrinic1gmailcom.kupnjam.model.pojo.ShoppingProductDetail;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProductListMain extends AppCompatActivity implements ProductAdapter.ProductClickListener, ProductFetchListener, MenuItem.OnMenuItemClickListener, View.OnClickListener{
+public class ProductListMain extends AppCompatActivity implements ProductAdapter.ProductClickListener, ProductFetchListener, View.OnClickListener{
 
     private static final String TAG = ProductListMain.class.getSimpleName();
+    boolean doubleBackToExitPressed = false;
     private RecyclerView mRecyclerView;
     private RestManager mManager;
     private ProductAdapter mProductAdapter;
@@ -68,7 +66,7 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
     private TextView mCounter;
     private int counter;
     private Map<String, Integer> mBasket = new HashMap<>();
-    boolean doubleBackToExitPressed = false;
+    private List<ShoppingProductDetail> mShoppinList = new ArrayList<>();
     private ImageView mShoppingList;
     private NavigationView mNavigationView;
 
@@ -105,9 +103,6 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
         mSettings.setOnClickListener(this);
 
         mShoppingList.setOnClickListener(this);
-
-
-
     }
 
 
@@ -148,8 +143,36 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
         mSearch = (Button) findViewById(R.id.search_product);
         mReload = (Button) findViewById(R.id.reload);
         mSearchField = (EditText) findViewById(R.id.searchField);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(mSearchField, InputMethodManager.SHOW_IMPLICIT);
         mShoppingList = (ImageView) findViewById(R.id.shoppingList);
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.logout_id:
+                        doLogout();
+                        return true;
+                    case R.id.home_id:
+                        Toast.makeText(ProductListMain.this, "TBA", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.reloadProducts_id:
+                        mMainDrawer.closeDrawer(Gravity.LEFT);
+                        loadProductFeed();
+                        Intent i = new Intent(ProductListMain.this, ProductListMain.class);
+                        startActivity(i);
+                        return true;
+                    case R.id.mylist_id:
+                        loadMyShoppingList();
+                        return true;
+                    case R.id.about_id:
+                        Toast.makeText(ProductListMain.this, "kupNjam 2016. Copyright - Marko Dobrinić & Aron Belsö", Toast.LENGTH_LONG).show();
+                        return true;
+                }
+                return false;
+            }
+        });
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewMain);
         mRecyclerView.setHasFixedSize(true);
@@ -158,6 +181,21 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
 
         mProductAdapter = new ProductAdapter(this);
         mRecyclerView.setAdapter(mProductAdapter);
+    }
+
+    private void doLogout() {
+//        SharedPreferences pref = getPreferences(0);
+//        SharedPreferences.Editor editor = pref.edit();
+//
+//        editor.putBoolean(Constants.USERS.IS_LOGGED_IN, false);
+//        editor.putString(Constants.USERS.EMAIL,"");
+//        editor.putString(Constants.USERS.NAME,"");
+//        editor.putString(Constants.USERS.UNIQUE_ID,"");
+//        editor.clear();
+//        editor.commit();
+        finish();
+        Intent intent = new Intent(this, UserMain.class);
+        startActivity(intent);
     }
 
     @Override
@@ -177,28 +215,51 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
         return Integer.toString(counter);
     }
 
-    @Override
-    public void onRemovedClicked() {
-        mCounter.setText(getCounter(--counter));
-    }
 
     @Override
-    public void onUpdateBasket(int count, Product product) {
-        mBasket.put(product.getName(), count);
+    public void onUpdateBasket(Product product) {
 
-        Log.d(TAG, "------------------------------------------------");
+        if(product.isChecked() && !isProductAlreadyInTheList(product.getName())) {
 
-        int total = 0;
+            ShoppingProductDetail details = new ShoppingProductDetail();
+            details.setProductName(product.getName());
+            details.setPrice(product.getPrice());
+            details.setStoreId(product.getStore_id());
 
-        for (Map.Entry<String, Integer> entry : mBasket.entrySet()) {
-            Integer value = entry.getValue();
-            total += value;
-            Log.d(TAG, entry.getKey() + ": " + value);
+            mShoppinList.add(details);
+        } else if(!product.isChecked() && isProductAlreadyInTheList(product.getName())) {
+            removeByProductName(product.getName());
         }
 
-        mCounter.setText(Integer.toString(total));
+        //mBasket.put(product.getName(), 1);
 
-        Toast.makeText(ProductListMain.this, "Count - " + count, Toast.LENGTH_SHORT).show();
+       // Log.d(TAG, "------------------------------------------------");
+
+        //for (Map.Entry<String, Integer> entry : mBasket.entrySet()) {
+          //  Log.d(TAG, entry.getKey());
+        //}
+        mCounter.setText(Integer.toString(mShoppinList.size()));
+       // Toast.makeText(ProductListMain.this, "Count - " + count, Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean isProductAlreadyInTheList(String name) {
+        for (ShoppingProductDetail shoppingProductDetail : mShoppinList) {
+            if(shoppingProductDetail.getProductName().equals(name))
+                return true;
+        }
+        return false;
+    }
+
+    private void removeByProductName(String name) {
+
+        ShoppingProductDetail readyToBeRemoved = null;
+
+        for (ShoppingProductDetail detail : mShoppinList) {
+            if(detail.getProductName().equals(name))
+                readyToBeRemoved = detail;
+        }
+
+        mShoppinList.remove(readyToBeRemoved);
     }
 
     @Override
@@ -250,13 +311,6 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
     public boolean getNetworkAvailability() {
         return Utilities.isNetworkAvailable(getApplicationContext());
     }
@@ -273,40 +327,6 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
     @Override
     public void onHideDialog() {
         mDialog.dismiss();
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) //get the id which is an int
-        {
-            case R.id.about_id:  // check if its the menu item next selected
-                // Single menu item is selected do something
-                // Ex: launching new activity/screen or show alert message
-                Toast.makeText(this, "About Selected", Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(MainActivity.this,secondAct.class));
-                break;
-            default:
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) //get the id which is an int
-        {
-            case R.id.about_id:  // check if its the menu item next selected
-                // Single menu item is selected do something
-                // Ex: launching new activity/screen or show alert message
-                Toast.makeText(this, "About Selected", Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(MainActivity.this,secondAct.class));
-                break;
-            default:
-
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -327,12 +347,37 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
                 mMainDrawer.openDrawer(Gravity.LEFT);
                 break;
             case R.id.shoppingList:
-                Intent intent = new Intent(this, ProductListUser.class);
-                startActivity(intent);
+                loadMyShoppingList();
             default:
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressed) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+        this.doubleBackToExitPressed = true;
+        Toast.makeText(this, "Kliknite nazad još jednom za izlaz.", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressed=false;
+            }
+        }, 2000);
+    }
+
+    private void loadMyShoppingList(){
+        Intent intent = new Intent(this, ProductListUser.class);
+        //intent.putExtra("products", (Serializable) mBasket);
+        intent.putExtra("productList", (ArrayList<ShoppingProductDetail>) mShoppinList);
+        startActivity(intent);
+    }
 
     public class SaveIntoDatabase extends AsyncTask<Product, Void, Void> {
 
@@ -361,26 +406,6 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
 
             return null;
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (doubleBackToExitPressed) {
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_HOME);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }
-        this.doubleBackToExitPressed = true;
-        Toast.makeText(this, "Kliknite nazad još jednom za izlaz.", Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressed=false;
-            }
-        }, 2000);
     }
 
 }

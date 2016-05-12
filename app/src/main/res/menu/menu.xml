@@ -1,48 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/header_id"
-        android:title="Izbornik"
-        android:icon="@drawable/search">
-    </item>
-    <group >
+    <group android:id="@+id/user">
         <item
-            android:id="@+id/home_id"
-            android:title="Početno"
-            android:icon="@drawable/home1">
+            android:title="Ivan Horvat"
+            android:icon="@drawable/profile">
         </item>
+    </group>
+    <group>
         <item
             android:title="Učitaj proizvode"
             android:id="@+id/reloadProducts_id"
-            android:icon="@drawable/list2">
+            android:icon="@drawable/refresh">
         </item>
-
         <item
-            android:id="@+id/mylist_id"
-            android:title="Moja Shopping Lista"
-            android:icon="@drawable/settings1">
+            android:title="Očisti listu"
+            android:id="@+id/clearProducts_id"
+            android:icon="@drawable/refresh">
         </item>
     </group>
 
-    <item android:title=" ">
+    <item android:title="Navigacija">
         <menu>
             <item
-                android:title="Podijeli"
-                android:id="@+id/share_id"
-                android:icon="@drawable/list1">
+                android:id="@+id/home_id"
+                android:title="Početna"
+                android:icon="@drawable/home">
             </item>
             <item
-                android:id="@+id/logout_id"
-                android:title="Odjavi se"
-                android:icon="@drawable/message1"
-                >
+                android:id="@+id/mylist_id"
+                android:title="Moja Shopping Lista"
+                android:icon="@drawable/list">
             </item>
-
             <item
                 android:title="O aplikaciji"
                 android:id="@+id/about_id"
-                android:icon="@drawable/like">
+                android:icon="@drawable/info">
+            </item>
+
+        </menu>
+    </item>
+
+
+
+    <item android:title="Korisničke opcije">
+        <menu>
+            <item
+                android:id="@+id/logout_id"
+                android:title="Odjava"
+                android:icon="@drawable/logout">
             </item>
         </menu>
     </item>

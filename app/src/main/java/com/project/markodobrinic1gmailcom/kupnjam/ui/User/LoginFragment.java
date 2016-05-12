@@ -2,6 +2,7 @@ package com.project.markodobrinic1gmailcom.kupnjam.ui.User;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +47,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_login,container,false);
+
         initViews(view);
         return view;
     }
@@ -64,6 +67,27 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
        tv_products.setOnClickListener(this);
         btn_login.setOnClickListener(this);
         tv_register.setOnClickListener(this);
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+
+                    goToStart();
+                    return true;
+                }
+                return false;
+            }
+        });
+        super.onResume();
     }
 
     @Override
@@ -90,7 +114,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
 
                 } else {
 
-                    Snackbar.make(getView(), "Fields are empty !", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), "Polja su prazna!", Snackbar.LENGTH_LONG).show();
                 }
                 break;
 
@@ -132,7 +156,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     editor.apply();
                     /**goToProfile(); */
                     goToProducts();
-
                 }
                 progress.setVisibility(View.INVISIBLE);
             }
@@ -140,7 +163,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
                 progress.setVisibility(View.INVISIBLE);
-                Log.d(Constants.USERS.TAG,"failed");
+                Log.d(Constants.USERS.TAG,"Greška ");
                 Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
@@ -167,5 +190,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         startActivity(i);
         //((Activity) getActivity()).overridePendingTransition(0,0);
     }
+
+    private void goToStart(){
+        Fragment starting = new StartingFragment();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_frame,starting);
+        ft.commit();
+    }
+
+
+
+
 
 }

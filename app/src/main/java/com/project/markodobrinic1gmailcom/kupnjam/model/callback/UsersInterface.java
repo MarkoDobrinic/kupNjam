@@ -12,7 +12,6 @@ import retrofit2.http.POST;
  */
 public interface UsersInterface {
 
-    @POST("android/login_registration/")
+    @POST("userapp/")
     Call<ServerResponse> operation(@Body ServerRequest request);
-
 }

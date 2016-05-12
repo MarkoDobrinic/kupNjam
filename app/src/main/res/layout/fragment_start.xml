@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_marginLeft="40dp"
-    android:layout_marginRight="40dp"
-    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
- >
+    android:orientation="vertical"
+    android:background="@drawable/start_bg">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/kupnjam_main"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginBottom="50dp"/>
 
     <TextView
-        android:text="kupNjam"
+        android:text="Pridruži nam se"
         android:textSize="22sp"
-        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:textColor="#fff"
         android:layout_marginBottom="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,35 +28,44 @@
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btnStartEmail"
         android:text="E-mail"
-        android:background="#FFF"
+        android:background="@drawable/email_shape"
         android:textColor="@android:color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"/>
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="10dp"
+        android:clickable="true" />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_facebook"
         android:text="Facebook"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/facebook_shape"
         android:textColor="@android:color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="10dp" />
+
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_google"
         android:text="Google +"
-        android:background="#DD22"
+        android:background="@drawable/google_shape"
         android:textColor="@android:color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="0dp" />
 
     <TextView
         android:id="@+id/tv_products"
         android:layout_marginTop="20dp"
-        android:textColor="#BA070A"
+        android:textColor="#fff"
         android:text="Pretraži proizvode"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

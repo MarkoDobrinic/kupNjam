@@ -31,26 +31,20 @@ public class UserMain extends AppCompatActivity{
 
         Fragment fragment;
 //        if(pref.getBoolean(Constants.USERS.IS_LOGGED_IN, false)){
-//  //        fragment = new ProfileFragment();
-////            Intent intent = new Intent(this, ProductListMain.class);
-////            startActivity(intent);
 //            Intent intent = new Intent(this, ProductListMain.class);
 //            startActivity(intent);
-//            Toast.makeText(this, "prvo" , Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, "Dobrodošli : " + pref.getString(Constants.USERS.NAME,""), Toast.LENGTH_LONG);
 //        }else {
-////            fragment = new LoginFragment();
-////            FragmentTransaction ft = getFragmentManager().beginTransaction();
-////            ft.replace(R.id.fragment_frame,fragment);
-////            ft.commit();
+//            Fragment fragment;
 //            fragment = new StartingFragment();
 //            FragmentTransaction ft = getFragmentManager().beginTransaction();
 //            ft.replace(R.id.fragment_frame,fragment);
 //            ft.commit();
 //            Toast.makeText(this, "drugo" , Toast.LENGTH_LONG).show();
 //        }
-        fragment = new StartingFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_frame,fragment);
-        ft.commit();
+            fragment = new StartingFragment();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.fragment_frame,fragment);
+            ft.commit();
     }
 }

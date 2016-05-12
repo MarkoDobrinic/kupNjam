@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.project.markodobrinic1gmailcom.kupnjam.R;
@@ -14,8 +13,7 @@ import com.project.markodobrinic1gmailcom.kupnjam.R;
  */
 public class CounterView extends LinearLayout {
 
-    private Button add, remove;
-    private EditText val;
+    private Button add;
     private int counter;
     private OnCounterChanged onCounterChanged;
 
@@ -41,26 +39,13 @@ public class CounterView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        add = (Button) findViewById(R.id.addToCart);
-        //remove = (Button) findViewById(R.id.removeFromCart);
-       // val = (EditText) findViewById(R.id.countValue);
-        this.counter = Integer.parseInt(val.getText().toString());
+       // add = (Button) findViewById(R.id.addToList);
+        /** to treba sredit -> this.counter = 0; **/
         add.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 ++counter;
                 notifyChange(counter);
-                val.setText(Integer.toString(counter));
-            }
-        });
-        remove.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (counter > 0) {
-                    --counter;
-                    notifyChange(counter);
-                    val.setText(Integer.toString(counter));
-                }
             }
         });
     }
@@ -72,7 +57,7 @@ public class CounterView extends LinearLayout {
     }
 
     private void init() {
-        inflate(getContext(), R.layout.counter_layout, this);
+        inflate(getContext(), R.layout.counter_main, this);
     }
 
     public int getCounter() {

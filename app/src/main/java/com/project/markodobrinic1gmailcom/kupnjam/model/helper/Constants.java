@@ -14,10 +14,10 @@ public class Constants {
 
     public static final class USERS{
 
-        public static final String BASE_URL = "http://api.learn2crack.com/";
+        public static final String BASE_URL = "https://kupnjam-abelso.rhcloud.com/";
         public static final String REGISTER_OPERATION = "register";
         public static final String LOGIN_OPERATION = "login";
-        public static final String CHANGE_PASSWORD_OPERATION = "chgPass";
+        //public static final String CHANGE_PASSWORD_OPERATION = "chgPass";
 
         public static final String SUCCESS = "success";
         public static final String FAILURE = "failure";
@@ -25,7 +25,7 @@ public class Constants {
 
         public static final String NAME = "name";
         public static final String EMAIL = "email";
-        public static final String UNIQUE_ID = "unique_id";
+       public static final String UNIQUE_ID = "unique_id";
 
         public static final String TAG = "kupNjam_USERS";
     }
@@ -45,13 +45,10 @@ public class Constants {
         public static final String DB_NAME = "products";
         public static final int DB_VERSION = 1;
         public static final String TABLE_NAME = "product";
-        public static final String TABLE_BASKET = "basket";
 
         public static final String DROP_QUERY = "DROP TABLE IF EXIST " + TABLE_NAME;
-        public static final String DROP_QUERY_BASKET = "DROP TABLE IF EXIST " + TABLE_BASKET;
 
         public static final String GET_PRODUCTS_QUERY = "SELECT * FROM " + TABLE_NAME;
-        public static final String GET_BASKET_QUERY = "SELECT * FROM " + TABLE_BASKET;
 
         public static final String ID = "id";
         public static final String NAME = "name";
@@ -80,23 +77,7 @@ public class Constants {
                 DESCRIPTION + " TEXT not null, " +
                 IMAGE_URL + " TEXT not null, " +
                 IMAGE + " blob not null)";
-
-        public static final String CREATE_TABLE_BASKET = "CREATE TABLE " + TABLE_BASKET + "" +
-                "(" + ID + " INTEGER PRIMARY KEY NOT NULL, " +
-                NAME + " TEXT not null, " +
-                DISC_PRICE + " TEXT not null, " +
-                PRICE + " TEXT not null, " +
-                STORE_ID + " INTEGER not null, " +
-                START_DATE + " TEXT not null, " +
-                END_DATE + " TEXT not null, " +
-                DESCRIPTION + " TEXT not null, " +
-                IMAGE_URL + " TEXT not null, " +
-                IMAGE + " blob not null)";
     }
-
-
-
-
 
 
 

@@ -9,23 +9,34 @@
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#DD22">
+        android:background="#118402">
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/back"
+            android:layout_marginRight="10dp"
+            android:textColor="#FFF"
+            android:layout_gravity="left"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Moja Shopping Lista"
+            android:text="Shopping Lista"
             android:textColor="#FFF"
-            android:textStyle="bold"
-            android:fontFamily="casual"
-            android:gravity="center"
+            android:fontFamily="roboto"
             android:textSize="25dp"/>
     </android.support.v7.widget.Toolbar>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewUser"
         android:layout_width="match_parent"
+        android:background="#cccccc"
         android:layout_height="match_parent"
         android:padding="5dp"
+        android:layout_margin="5dp"
         android:scrollbars="none" />
 
 </LinearLayout>

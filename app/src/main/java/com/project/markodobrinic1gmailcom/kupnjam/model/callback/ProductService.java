@@ -13,7 +13,7 @@ import retrofit2.http.GET;
 public interface ProductService {
 
     /** using GET method for data fetching **/
-    /** base url : https://kupnjam-abelso.rhcloud.com **/
+    /** base url : https://kupnjam-abelso.rhcloud.com/api/index.php/products?transform=1 **/
 
     @GET("/api/index.php/products?transform=1")
     Call<List<Product>> getAllProducts();

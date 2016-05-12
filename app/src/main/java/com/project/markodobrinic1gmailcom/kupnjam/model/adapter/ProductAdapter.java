@@ -1,12 +1,17 @@
 package com.project.markodobrinic1gmailcom.kupnjam.model.adapter;
 
+import android.content.Context;
+import android.graphics.Paint;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.markodobrinic1gmailcom.kupnjam.R;
 import com.project.markodobrinic1gmailcom.kupnjam.model.helper.Constants;
@@ -25,7 +30,6 @@ import java.util.List;
 
 /** extending RecyclerView **/
 
-/** implements Filterable? **/
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> {
 
 
@@ -54,20 +58,31 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
         holder.mName.setText(currProduct.getName());
         holder.mPrice.setText(String.format("%.2f kn", currProduct.getPrice()));
+        holder.mPrice.setPaintFlags(holder.mPrice.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
         holder.mDiscPrice.setText(String.format("%.2f kn", currProduct.getDiscounted_price()));
         holder.mProductDate.setText("Akcija traje od: " + currProduct.getStart_date() + " do " + currProduct.getEnd_date());
 
+        if(currProduct.isChecked()) {
+            holder.mAddProduct.setBackgroundResource(R.drawable.row_added_product);
+        } else {           
+            holder.mAddProduct.setBackgroundResource(R.drawable.row_add_product);
+        }
+
+
+
        // holder.handleCounter(position);
+
+        ImageView mStorePhoto = holder.mStorePhoto;
 
         switch (currProduct.getStore_id()) {
             case 1:
-                holder.mStorePhoto.setImageResource(R.drawable.konzum);
+                mStorePhoto.setImageResource(R.drawable.konzum);
                     break;
             case 2:
-                holder.mStorePhoto.setImageResource(R.drawable.billa);
+                mStorePhoto.setImageResource(R.drawable.billa);
                 break;
             case 3:
-                holder.mStorePhoto.setImageResource(R.drawable.spar);
+                mStorePhoto.setImageResource(R.drawable.spar);
                 break;
             default:
         }
@@ -119,7 +134,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
         private ImageView mPhoto, mStorePhoto;
         private TextView mName, mPrice, mDiscPrice, mProductDate;
-        private CounterView mCounter;
+        private Button mAddProduct;
 
         public Holder(View itemView) {
             super(itemView);
@@ -129,6 +144,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
             mName = (TextView) itemView.findViewById(R.id.productName);
             mPrice = (TextView) itemView.findViewById(R.id.productPrice);
             mDiscPrice = (TextView) itemView.findViewById(R.id.productDiscPrice);
+            mAddProduct = (Button) itemView.findViewById(R.id.add_product);
+            mAddProduct.setOnClickListener(this);
 //            mCounter = (CounterView) itemView.findViewById(R.id.counterView);
 //            mCounter.setOnCounterChanged(new CounterView.OnCounterChanged() {
 //                @Override
@@ -156,8 +173,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         public void onClick(View v) {
                     int layoutPosition = getLayoutPosition();
             switch (v.getId()) {
+                case R.id.add_product:
+                     Product product = mFilterableProducts.get(layoutPosition);
+                     product.setChecked(!product.isChecked());
+                     mListener.onUpdateBasket(product);
+                     //mAddProduct.setVisibility(View.GONE);
+                    notifyDataSetChanged();
+                    break;
                 default:
-                    mListener.onClick(layoutPosition);
+                    try {
+                        mListener.onClick(layoutPosition);
+                    }catch (Exception e){
+                        e.getMessage();
+                    }
             }
         }
     }
@@ -168,9 +196,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
         void onAddClicked();
 
-        void onRemovedClicked();
-
-        void onUpdateBasket(int count, Product product);
+        void onUpdateBasket(Product product);
 
         int getCounter(String name);
     }

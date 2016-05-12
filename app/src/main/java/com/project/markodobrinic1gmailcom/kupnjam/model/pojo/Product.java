@@ -47,6 +47,8 @@ public class Product implements Serializable {
     @Expose
     private String description;
 
+    private boolean checked;
+
     public String getImage() {
         return image;
     }
@@ -173,5 +175,13 @@ public class Product implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 }

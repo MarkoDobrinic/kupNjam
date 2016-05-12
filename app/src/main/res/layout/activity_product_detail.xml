@@ -40,7 +40,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    >
 
                     <TextView
                         android:id="@+id/productDetailName"
@@ -48,11 +49,12 @@
                         android:layout_height="wrap_content"
                         android:text="PRODUCT_NAME"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:layout_marginLeft="7dp"
-                        android:layout_marginRight="7dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
                         android:layout_gravity="left"
                         android:textColor="#646464"
-                        android:layout_marginTop="7dp" />
+                        android:layout_marginTop="12dp" />
+
 
                     <TextView
                         android:id="@+id/productDetailDate"
@@ -70,6 +72,19 @@
                         android:background="@drawable/date_bg"
                         android:textSize="16dp"/>
 
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="18dp"
+                        android:id="@+id/productDetailStore"
+                        android:src="@mipmap/ic_launcher"
+                        android:scaleType="fitStart"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:clickable="false"
+                        android:layout_gravity="left"
+                        android:layout_marginBottom="10dp"
+                        />
+
                     <TextView
                         android:id="@+id/productDetailInfo"
                         android:layout_width="wrap_content"
@@ -78,8 +93,8 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="#222222"
                         android:layout_gravity="left"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
                         android:layout_marginBottom="20dp"
                         android:textSize="15dp" />
 
@@ -87,7 +102,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="3dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginBottom="12dp"
                         android:layout_gravity="left"
                         android:gravity="left|bottom">
 
@@ -98,7 +114,8 @@
                             android:text="Medium Text"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textSize="30dp"
-                            android:layout_gravity="left" />
+                            android:layout_gravity="left"
+                            />
 
                         <TextView
                             android:id="@+id/productDetailPrice"
