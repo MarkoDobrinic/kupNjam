@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -71,6 +72,7 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
     private List<ShoppingProductDetail> mShoppinList = new ArrayList<>();
     private ImageView mShoppingList;
     private NavigationView mNavigationView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +119,7 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
         mDialog.setIndeterminate(true);
 
         mProductAdapter.reset();
+        mSwipeRefreshLayout.setRefreshing(false);
         mDialog.show();
 
         if (getNetworkAvailability()) {
@@ -129,6 +132,7 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
     //private
     public void getFeedFromDatabase() {
        mDatabase.fetchProducts(this);
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private void configViews() {
@@ -139,6 +143,13 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.main_swipe_refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadProductFeed();
+            }
+        });
         mSettings = (ImageButton) findViewById(R.id.sandwich_menu);
         mMainDrawer = (DrawerLayout) findViewById(R.id.mainDrawer);
         mCounter = (TextView) findViewById(R.id.counter);

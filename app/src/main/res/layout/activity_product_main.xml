@@ -117,13 +117,18 @@
                 android:visibility="gone"/>
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerViewMain"
+        <android.support.v4.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="5dp"
-            android:scrollbars="none"
-            android:layout_marginBottom="5dp"/>
+            android:layout_height="wrap_content"
+            android:id="@+id/main_swipe_refresh_layout">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewMain"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                android:scrollbars="none"
+                android:layout_marginBottom="5dp"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
 
     </LinearLayout>
 
