@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * Created by marko.dobrinic1@gmail.com on 23.4.2016..
- * extending RecyclerView
+ *
  **/
 
 /** extending RecyclerView **/
@@ -67,8 +67,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         } else {           
             holder.mAddProduct.setBackgroundResource(R.drawable.row_add_product);
         }
-
-
 
        // holder.handleCounter(position);
 

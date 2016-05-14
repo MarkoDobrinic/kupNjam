@@ -10,7 +10,7 @@
     </group>
     <group>
         <item
-            android:title="Učitaj proizvode"
+            android:title="Očisti shopping listu"
             android:id="@+id/reloadProducts_id"
             android:icon="@drawable/refresh">
         </item>

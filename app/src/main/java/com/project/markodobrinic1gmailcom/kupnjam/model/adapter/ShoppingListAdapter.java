@@ -34,8 +34,6 @@ import static android.support.v4.app.ActivityCompat.startActivity;
  */
 public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapter.Holder>{
 
-
-
     private LayoutInflater mInflater;
     private List<Item> mShoppingItems = new ArrayList<>();
 
@@ -70,7 +68,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
 
         ShoppingProductDetail detail = item.getDetail();
         iteName.setText(detail.getProductName());
-        itemPrice.setText(Double.toString(detail.getPrice()));
+        itemPrice.setText(Double.toString(detail.getPrice()) + "kn");
     }
 
     private void bindHeader(Holder holder, int position) {

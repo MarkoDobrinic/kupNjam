@@ -1,12 +1,15 @@
 package com.project.markodobrinic1gmailcom.kupnjam.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +25,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     private ImageView mImage, mStore;
     private TextView mName, mId, mPrice, mDiscPrice, mDescription, mDate;
     private FloatingActionButton mButtonCart;
+    private Button mShare, mBack;
 
 
     @Override
@@ -73,6 +77,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     private void configViews() {
 
+        mShare = (Button) findViewById(R.id.share_product);
+        mBack = (Button) findViewById(R.id.btn_back);
         mButtonCart = (FloatingActionButton) findViewById(R.id.btnDetailCart);
         mDate = (TextView) findViewById(R.id.productDetailDate);
         mDescription = (TextView) findViewById(R.id.productDetailInfo);
@@ -81,6 +87,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         mDiscPrice = (TextView) findViewById(R.id.productDetailDPrice);
         mPrice = (TextView) findViewById(R.id.productDetailPrice);
         mStore = (ImageView) findViewById(R.id.productDetailStore);
+
+        mShare.setOnClickListener(this);
+        mBack.setOnClickListener(this);
     }
 
     @Override
@@ -89,8 +98,23 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             case R.id.btnDetailCart:
                 Toast.makeText(ProductDetail.this, "Ova funkcionalnost trenutno nije dostupna!", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.share_product:
+                AlertDialog dialog = new AlertDialog.Builder(ProductDetail.this)
+                        .setTitle("Podijeli proizvod")
+                        .setView(R.layout.share_layout)
+                        .setCancelable(true)
+                        .setPositiveButton("Zatvori", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create();
+                dialog.show();
+                break;
+            case R.id.btn_back:
+                finish();
             default:
-                Toast.makeText(ProductDetail.this, "TBA", Toast.LENGTH_SHORT).show();
+
         }
     }
 }
