@@ -67,7 +67,7 @@ public class MainMaps extends FragmentActivity implements OnMapReadyCallback {
         mMap.setBuildingsEnabled(true);
         mMap.getUiSettings().setRotateGesturesEnabled(false);
 
-        mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(45.8150108,15.981919000000062) , 13) );
+        //mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(45.8150108,15.981919000000062) , 13) );
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override

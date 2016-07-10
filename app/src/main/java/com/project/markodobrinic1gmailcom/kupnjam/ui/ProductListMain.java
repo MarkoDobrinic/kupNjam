@@ -109,7 +109,6 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
         mShoppingList.setOnClickListener(this);
     }
 
-
     private void loadProductFeed() {
 
         mDialog = new ProgressDialog(ProductListMain.this);
@@ -240,7 +239,6 @@ public class ProductListMain extends AppCompatActivity implements ProductAdapter
     private String getCounter(int counter) {
         return Integer.toString(counter);
     }
-
 
     @Override
     public void onUpdateBasket(Product product) {
